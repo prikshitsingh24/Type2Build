@@ -78,13 +78,7 @@ export default function Home(session:Session) {
         Frontend
         </div>
         <div className="w-full border border-white h-full rounded-sm p-3">
-        <TypeAnimation
-      sequence={[
-        // Same substring at the start will only be typed out once, initially
         `I'd love to have a beautiful landing page for my startup. I want it to feature a big, eye-catching headline with a brief description underneath. Below that, I’d like a prominent call-to-action button that stands out. It would be great if the hero section could have a nice background image that fits the theme of innovation and technology. Finally, include a small section for customer testimonials with quotes and names.`
-      ]}
-      speed={99}
-    />
         </div>
       </div>
       <div>
@@ -93,13 +87,7 @@ export default function Home(session:Session) {
         </div>
         <div className="w-full border border-white h-full rounded-sm p-3">
         <div>
-        <TypeAnimation
-      sequence={[
-        // Same substring at the start will only be typed out once, initially
         `I need a simple backend setup for my website. I’d like it to handle user sign-ups and logins with basic authentication. It should also include an endpoint to fetch user data and another to update user profiles. Can you set this up with some basic error handling and use a database to store user information?`
-      ]}
-      speed={99}
-    />
         </div>
         </div>
       </div>
