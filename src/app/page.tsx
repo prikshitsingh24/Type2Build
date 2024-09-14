@@ -2,12 +2,39 @@
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import profileIcon from "./images/profile.png";
+import { useRouter } from 'next/navigation'
+import { SessionProvider, useSession } from "next-auth/react"
+import { Session } from "next-auth";
+import { useState } from "react";
+import AuthBox from "./component/authBox/authBox";
+import { Input } from "@nextui-org/react";
+import { useRecoilState } from "recoil";
+import authBoxState from "./state/authBoxState";
 
-export default function Home() {
+export default function Home(session:Session) {
+  const router = useRouter()
+  const { data, status } = useSession()
+  const [authBox,setAuthBox]=useRecoilState(authBoxState)
+  const handleBuildClick=()=>{
+    if(status =="authenticated"){
+      router.push("/builder")
+    }else{
+      setAuthBox(true)
+    }
+    
+  }
+  const handleProfileClick=()=>{
+    router.push("/setting")
+  }
   return (
     <div>
+      {authBox&&(
+         <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-10 backdrop-blur-sm z-50">
+         <AuthBox></AuthBox>
+       </div>
+      )}
       <div className="flex flex-row justify-end pt-7 mb-3">
-        <div className="mr-10 pt-4 w-14 rounded-full hover:cursor-pointer ">
+        <div className="mr-10 pt-4 w-14 rounded-full hover:cursor-pointer " onClick={handleProfileClick}>
           <Image className="object-cover" src={profileIcon} alt="profile"></Image>
         </div>
         </div>
@@ -30,7 +57,7 @@ export default function Home() {
     />
       </div>
       <div>
-        <button className="md:mt-20 bg-gray-600 rounded-md p-3">Start building</button>
+        <button className="md:mt-20 bg-gray-600 rounded-md p-3" onClick={handleBuildClick}>Start building</button>
       </div>
       </div>
      <div className="w-full">
@@ -76,6 +103,5 @@ export default function Home() {
       </div>
     </div>
     </div>
-    
   );
 }
