@@ -5,4 +5,9 @@ const authBoxState = atom({
     default: false, // default value (aka initial value)
   });
 
-export default authBoxState
+const signUpBoxState = atom({
+  key:"signUpBoxState",
+  default:false
+})
+
+export default {authBoxState,signUpBoxState}

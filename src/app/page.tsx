@@ -10,11 +10,13 @@ import AuthBox from "./component/authBox/authBox";
 import { Input } from "@nextui-org/react";
 import { useRecoilState } from "recoil";
 import authBoxState from "./state/authBoxState";
+import SignUpBox from "./component/signUpBox/signUpBox";
 
 export default function Home(session:Session) {
   const router = useRouter()
   const { data, status } = useSession()
-  const [authBox,setAuthBox]=useRecoilState(authBoxState)
+  const [authBox,setAuthBox]=useRecoilState(authBoxState.authBoxState)
+  const [signUpBox,setSignUpBox]=useRecoilState(authBoxState.signUpBoxState)
   const handleBuildClick=()=>{
     if(status =="authenticated"){
       router.push("/builder")
@@ -31,6 +33,11 @@ export default function Home(session:Session) {
       {authBox&&(
          <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-10 backdrop-blur-sm z-50">
          <AuthBox></AuthBox>
+       </div>
+      )}
+        {signUpBox&&(
+         <div className="fixed inset-0 flex items-center justify-center bg-white bg-opacity-10 backdrop-blur-sm z-50">
+         <SignUpBox></SignUpBox>
        </div>
       )}
       <div className="flex flex-row justify-end pt-7 mb-3">
