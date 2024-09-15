@@ -6,6 +6,8 @@ import { Button, Link } from "@nextui-org/react";
 import { useRecoilState } from "recoil";
 import authBoxState from "@/app/state/authBoxState";
 import { useState } from "react";
+import GoogleButton from "../buttons/googleButton";
+import GithubButton from "../buttons/githubButton";
 
 export default function SignUpBox(){
     const [authBox,setAuthBox]=useRecoilState(authBoxState.authBoxState);
@@ -42,7 +44,7 @@ export default function SignUpBox(){
     }
 
     return(
-        <div className="bg-black w-[400px] h-[600px] rounded-lg">
+        <div className="border w-[400px] h-[600px] rounded-lg">
             <div className="flex flex-col">
                 <div className="w-full flex flex-row justify-end pr-4 pt-2" onClick={handleCrossClick}><Image src={crossLogo} alt="cross" className="w-7"></Image></div>
                 <div className="w-full text-center text-3xl">
@@ -64,7 +66,12 @@ export default function SignUpBox(){
                 <div>
                    <hr className="ml-10 mr-10 mt-5" /> 
                 </div>
-                
+                <div className="w-full mt-7 flex flex-row justify-center">
+                    <GoogleButton></GoogleButton>
+                </div>
+                <div className="w-full mt-7 flex flex-row justify-center">
+                    <GithubButton></GithubButton>
+                </div>
             </div>
         </div>
     )

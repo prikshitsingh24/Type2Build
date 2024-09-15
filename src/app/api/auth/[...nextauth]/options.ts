@@ -4,18 +4,13 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 const prisma = new PrismaClient();
 
-interface User {
-  name: string;
-  password:string,
-  email: string;
-}
-
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
+        id: {label:'Id', type:'number'},
         name: { label: 'Name', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
         email : {label:"Email",type:'text'}
@@ -34,9 +29,10 @@ export const authOptions: NextAuthOptions = {
         if (user && user.password === credentials.password) {
           // Return user object if authentication is successful
           return {
+            id: user.id,
             name: user.name,
             email: user.email,
-          } as User;
+          };
         }
       
         return null; // Return null if authentication fails
@@ -44,10 +40,10 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, user }) {
+    async session({ session, token }) {
       return {
         ...session,
-        user: { ...session.user, id: user?.id },
+        user: { ...session.user, id:token.id as string },
       };
     },
     async jwt({ token, user }) {
