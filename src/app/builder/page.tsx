@@ -2,7 +2,7 @@
 
 export default function Builder(){
     return(
-        <div>
+        <div className="w-full h-screen ">
             Builder
         </div>
     )

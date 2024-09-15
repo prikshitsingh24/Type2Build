@@ -7,7 +7,7 @@ import { SessionProvider, useSession } from "next-auth/react"
 import { Session } from "next-auth";
 import { useState } from "react";
 import AuthBox from "./component/authBox/authBox";
-import { Input } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useRecoilState } from "recoil";
 import authBoxState from "./state/authBoxState";
 import SignUpBox from "./component/signUpBox/signUpBox";
@@ -64,7 +64,7 @@ export default function Home(session:Session) {
     />
       </div>
       <div>
-        <button className="md:mt-20 bg-gray-600 rounded-md p-3" onClick={handleBuildClick}>Start building</button>
+        <Button color="primary" size="lg" variant="bordered" onClick={handleBuildClick}>Start building</Button>
       </div>
       </div>
      <div className="w-full">
