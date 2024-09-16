@@ -7,7 +7,10 @@
   --foreground: #171717;
 }
 
-
+[data-theme='light'] {
+  --background: #ffffff;
+  --foreground: #171717;
+}
 
 [data-theme='dark'] {
   --background: #000000;

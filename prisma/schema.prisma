@@ -8,9 +8,24 @@ generator client {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   email     String   @unique
   name      String
   password  String
+  projects  Project[]
+
+  @@index([email])
+}
+
+model Project{
+  id        String    @id @default(uuid())
+  createdAt DateTime  @default(now())
+  projectName String
+  projectDescription String?
+  frontend  String
+  Backend   String
+  owner     User      @relation(fields: [ownerId],references: [id])
+  ownerId   String
+  
 }

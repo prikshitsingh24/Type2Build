@@ -34,7 +34,7 @@ export default function Home(session:Session) {
     // Get the stored theme from localStorage or default to 'light'
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
-    document.documentElement.setAttribute('prefers-color-scheme', savedTheme);
+    document.documentElement.setAttribute('data-theme', savedTheme);
   }, []);
 
   const toggleTheme = () => {
@@ -51,12 +51,12 @@ export default function Home(session:Session) {
   return (
     <div>
       {authBox&&(
-         <div className="fixed inset-0 flex items-center justify-center  bg-opacity-10 backdrop-blur-sm z-50">
+         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50">
          <AuthBox></AuthBox>
        </div>
       )}
         {signUpBox&&(
-         <div className="fixed inset-0 flex items-center justify-center  bg-opacity-10 backdrop-blur-sm z-50">
+         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50">
          <SignUpBox></SignUpBox>
        </div>
       )}

@@ -6,6 +6,10 @@
 .pnp.js
 .yarn/install-state.gz
 
+
+#migration
+/prisma/migrations
+
 # testing
 /coverage
 
