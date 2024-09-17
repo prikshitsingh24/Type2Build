@@ -5,28 +5,43 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  /* --background-image: url('https://img.freepik.com/free-photo/black-white-background_23-2150530985.jpg?t=st=1726551401~exp=1726555001~hmac=8979b273deaa4a2ceeb7bbb645f13993ce80c593dfd07b4e20c1d3023b2622ec&w=1800'); */
 }
 
 [data-theme='light'] {
-  --background: #ffffff;
+  --background: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
   --foreground: #171717;
 }
 
 [data-theme='dark'] {
-  --background: #000000;
-  --foreground: #006FEE;
+  --background: #18181B; /* Slightly transparent dark overlay */
+  --foreground: #FDFDFD;
 }
 
-
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.main-content {
+  position: relative;
+  z-index: 0; /* Ensure your main content stays above the blur layer */
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Custom scrollbar styling for WebKit browsers (Chrome, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 12px; /* Adjust the width of the scrollbar */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #888; /* Thumb color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Thumb color on hover */
+}
+
+/* Hide scrollbar arrows (for WebKit browsers) */
+.custom-scrollbar::-webkit-scrollbar-button {
+  display: none; /* Hide the scrollbar buttons (arrows) */
 }
