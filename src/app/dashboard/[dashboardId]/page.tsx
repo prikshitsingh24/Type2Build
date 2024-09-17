@@ -3,7 +3,7 @@
 import { signOut, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, CardBody, CardHeader, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spacer, useDisclosure } from '@nextui-org/react';
+import { Button, Card, CardBody, CardHeader, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spacer, Spinner, useDisclosure } from '@nextui-org/react';
 import { LogoutIcon } from './logout';
 import { redirect } from 'next/navigation';
 import { AddIcon } from './add';
@@ -69,7 +69,7 @@ export default function Dashboard({params}:any) {
   },[])
 
   return (
-    <div className="w-full h-screen grid grid-rows-[100px_1fr] grid-cols-[1fr_3fr] ">
+    <div className="w-full h-screen grid grid-rows-[90px_1fr] grid-cols-[1fr_3fr] overflow-hidden ">
       {/* Header */}
       <div className="row-span-1 col-span-2 ">
        <div className='text-4xl p-5'>
@@ -80,7 +80,7 @@ export default function Dashboard({params}:any) {
         </div>
       </div>
       {/* Sidebar */}
-      <aside className="border ml-4 rounded-xl p-4 mb-5 flex flex-col text-lg">
+      <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg">
         <div className='mb-5 border-b hover:cursor-pointer'>Settings</div>
         <div className='mb-5 border-b hover:cursor-pointer'>Account Settings</div>
         <div className="mt-auto">
@@ -88,7 +88,7 @@ export default function Dashboard({params}:any) {
         </div>
       </aside>
       {/* Main Content */}
-      <main className="row-span-1 col-span-1 p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4">
+      <main className="row-span-1 col-span-1 p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4 overflow-y-scroll">
         <div className='flex flex-row'>
         <div>
         Projects
@@ -97,13 +97,13 @@ export default function Dashboard({params}:any) {
             <Button color="primary" size="sm" variant="bordered" startContent={<AddIcon/>} onPress={onOpen}>Create new project</Button>
         </div>
         </div>
-        <div className='overflow-scroll'>
+        <div>
           {projects?.length==0?(
-             <div>
-              fetching
+             <div className='h-full w-full flex items-center justify-center'>
+              <Spinner size="lg" />
              </div>
           ):(
-           <div className='grid grid-cols-4 gap-5 over mt-10 hover:cursor-pointer'>
+           <div className='grid grid-cols-4 gap-5 mt-10 hover:cursor-pointer'>
            {projects?.map((project) => (
                  <Card>
                  <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">

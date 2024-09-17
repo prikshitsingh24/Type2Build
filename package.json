@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "db":"npx prisma migrate dev",
+    "db": "npx prisma migrate dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.19.0",
     "@nextui-org/react": "^2.4.7",
     "@prisma/client": "^5.19.1",
     "framer-motion": "^11.5.4",
