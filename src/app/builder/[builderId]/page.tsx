@@ -50,7 +50,7 @@ export default function Builder({ params }: any) {
             </div>
             <div className="grid grid-cols-[1fr_2fr] gap-4 h-full">
                 <div  className="pr-2 ml-4 mb-20">
-                    <Chat />
+                    <Chat id={projectId} />
                 </div>
                 <div className="mb-32">
                     <Preview />

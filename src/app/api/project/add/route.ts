@@ -15,8 +15,10 @@ export async function POST(req:Request) {
     const project = await prisma.project.create({
         data:{
             projectName:projectName,
-            frontend:"",
-            Backend:"",
+            frontendProd:"",
+            backendProd:"",
+            frontendDev:"",
+            backendDev:"",
             owner: {
                 connect: { id: ownerId } // Connect to an existing user
             },
