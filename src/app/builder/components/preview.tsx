@@ -9,7 +9,7 @@ import { useRecoilState } from "recoil";
 import Renderer from "./renderer";
 import { ToolKitIcon } from "./toolkit";
 
-export default function Preview(){
+export default function Preview({frontendDev}: any=""){
     const [selectedElement,setSelectedElement]=useState<any>(null);
     const [toolkit,setToolkit]=useState(false)
     const [code,setCode]=useRecoilState(codeStatus.frontendCodeState);
@@ -59,7 +59,11 @@ export default function Preview(){
             </div>
             
             <div className="border flex rounded-lg h-full mr-4 hover:cursor-pointer" >
-                <Renderer onElementSelect={handleSelectedElement}></Renderer>
+                {frontendDev?(
+                    <Renderer onElementSelect={handleSelectedElement} frontendDev={frontendDev}></Renderer>
+                ):(
+                    <Renderer onElementSelect={handleSelectedElement}></Renderer>
+                )}
             </div>
             {selectedElement && toolkit && (
                 <div className="absolute bottom-4 right-0 p-4 bg-white border border-gray-300 shadow-lg mt-4 mr-4 rounded-md">

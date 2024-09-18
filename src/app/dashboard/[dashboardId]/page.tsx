@@ -41,7 +41,6 @@ export default function Dashboard({params}:any) {
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme); // Save the theme to localStorage
   };
- 
 
   const handleCreateProject=async ()=>{
     setLoading(true);
@@ -56,6 +55,11 @@ export default function Dashboard({params}:any) {
       setLoading(false);
       router.push(`/builder/${data.project.id}`)
     }
+  }
+
+  const handleCardClick=async (id: string)=>{
+    console.log("sdasdasdaxdgafsdagsd")
+    router.push(`/builder/${id}`)
   }
 
   useEffect(()=>{
@@ -103,7 +107,10 @@ export default function Dashboard({params}:any) {
           ):(
            <div className='grid grid-cols-5 gap-5 mt-5 hover:cursor-pointer'>
            {projects?.map((project) => (
-              <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
+            <div onClick={() => {
+              console.log("Card was clicked!");
+              handleCardClick(project.id);}}>
+                <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <Image
                     src={nextJsLogo}
@@ -116,6 +123,8 @@ export default function Dashboard({params}:any) {
                   <div className='text-sm text-gray-600'>{project.projectDescription}</div>
                 </CardBody>
               </Card>
+            </div>
+              
             
                
             ))}
