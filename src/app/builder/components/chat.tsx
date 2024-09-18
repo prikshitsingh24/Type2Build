@@ -97,10 +97,10 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
 
 
   const handleSend = async () => {
-    if(newDraft && !previousChat){
+    if(newDraft && previousChat.length==0){
       newDraftPrompt();
     }
-    else if(changesInDraft || previousChat){
+    else if(changesInDraft || previousChat.length!=0){
       changesInDraftPrompt();
     }
       
