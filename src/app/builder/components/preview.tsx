@@ -45,7 +45,7 @@ export default function Preview({frontendDev}: any=""){
             <div className="flex-1 flex-row text-2xl">
             <div className="flex flex-row items-center">
             Preview
-            {code && !changesInDraft &&(
+            {code && !changesInDraft && !frontendDev &&(
                 <div className="flex flex-row w-full justify-center">
                     <Button color="danger" variant="bordered" onClick={handleNewDraftClick}>New Draft</Button>
                     <div className="ml-10" ><Button color="primary" size="md" variant="bordered" onClick={handleChangesInDraftClick}>Make changes in this draft</Button></div>

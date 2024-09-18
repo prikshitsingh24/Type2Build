@@ -6,7 +6,7 @@ import codeStatus from '@/app/state/codeStatus';
 import promptStatus from '@/app/state/promptStatus';
 import messageStatus from '@/app/state/messageStatus';
 
-export default function Chat ({id,previousChat}:any) {
+export default function Chat ({id,previousChat,frontendDev}:any) {
   const [message, setMessage] = useState('');
   const [code,setCode]=useRecoilState(codeStatus.frontendCodeState)
   const [loading,setLoading]=useState(false)
@@ -55,19 +55,36 @@ export default function Chat ({id,previousChat}:any) {
       return
     }
       try{
-        const response=await fetch("/api/model/modify",{
-          method:"POST",
-          body: JSON.stringify({prompt:message,code,projectId: id})
-        })
-        if(response.ok){
-          const data = await response.json()
-        console.log(data)
-        setCode(data.output)
-        setMessages((prevMessages) => [
-          ...prevMessages,
-          message
-        ]);
-        setMessage('');
+        if(code){
+          const response=await fetch("/api/model/modify",{
+            method:"POST",
+            body: JSON.stringify({prompt:message,code,projectId: id})
+          })
+          if(response.ok){
+            const data = await response.json()
+          console.log(data)
+          setCode(data.output)
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            message
+          ]);
+          setMessage('');
+          }
+        }else{
+          const response=await fetch("/api/model/modify",{
+            method:"POST",
+            body: JSON.stringify({prompt:message,code:frontendDev,projectId: id})
+          })
+          if(response.ok){
+            const data = await response.json()
+          console.log(data)
+          setCode(data.output)
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            message
+          ]);
+          setMessage('');
+          }
         }
         
       }catch(err){
@@ -80,10 +97,10 @@ export default function Chat ({id,previousChat}:any) {
 
 
   const handleSend = async () => {
-    if(newDraft){
+    if(newDraft && !previousChat){
       newDraftPrompt();
     }
-    else if(changesInDraft){
+    else if(changesInDraft || previousChat){
       changesInDraftPrompt();
     }
       
