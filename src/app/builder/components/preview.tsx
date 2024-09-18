@@ -35,6 +35,7 @@ export default function Preview({frontendDev}: any=""){
     }
 
     const handleChangesInDraftClick=()=>{
+        setNewDraft(false);
         setChangesInDraft(true);
     }
 

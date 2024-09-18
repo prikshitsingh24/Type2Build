@@ -12,6 +12,9 @@ import lightModeLogo from "../../images/lightMode.png"
 import Image from "next/image";
 import nextJsLogo from "../../images/nextjs.png"
 import NavBar from './navbar';
+import codeStatus from '@/app/state/codeStatus';
+import { useRecoilState } from 'recoil';
+import promptStatus from '@/app/state/promptStatus';
 
 export default function Dashboard({params}:any) {
   const { data, status } = useSession();
@@ -23,7 +26,9 @@ export default function Dashboard({params}:any) {
   const [projectDescription,setProjectDescription]=useState("");
   const [projects,setProject]=useState<any[]>()
   const [frontendCode, setFrontendCode] = useState("");
-
+  const [code, setCode] = useRecoilState(codeStatus.frontendCodeState);
+  const [newDraft,setNewDraft]=useRecoilState(promptStatus.newDraftState);
+  const [changesInDraft,setChangesInDraft]=useRecoilState(promptStatus.changesInDraftState);
   const handleLogoutClick=async ()=>{
     await signOut({ redirect: false }); // Disable automatic redirection
     router.push('/');
@@ -63,6 +68,9 @@ export default function Dashboard({params}:any) {
   }
 
   useEffect(()=>{
+    setCode("")
+    setChangesInDraft(false);
+    setNewDraft(true)
     const getProjects=async ()=>{
       const userId = params.dashboardId;
     const response=await fetch("/api/project/get",{

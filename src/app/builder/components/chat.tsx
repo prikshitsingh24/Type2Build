@@ -57,9 +57,10 @@ export default function Chat ({id,previousChat}:any) {
       try{
         const response=await fetch("/api/model/modify",{
           method:"POST",
-          body: JSON.stringify({prompt:message,code})
+          body: JSON.stringify({prompt:message,code,projectId: id})
         })
-        const data = await response.json()
+        if(response.ok){
+          const data = await response.json()
         console.log(data)
         setCode(data.output)
         setMessages((prevMessages) => [
@@ -67,6 +68,8 @@ export default function Chat ({id,previousChat}:any) {
           message
         ]);
         setMessage('');
+        }
+        
       }catch(err){
         return err
       }finally{

@@ -56,7 +56,7 @@ export async function POST(req:Request) {
                     return NextResponse.json({ message: 'Failed to generate due to safety concerns' });
                   } else {
                     console.error('Unexpected Error:', error);
-                    return NextResponse.json({ message: 'An unexpected error occurred' });
+                    return NextResponse.error()
                   }
             }
             
