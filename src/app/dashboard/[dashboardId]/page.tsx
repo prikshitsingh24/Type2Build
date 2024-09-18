@@ -11,6 +11,7 @@ import darkModeLogo from "../../images/darkMode.png"
 import lightModeLogo from "../../images/lightMode.png"
 import Image from "next/image";
 import nextJsLogo from "../../images/nextjs.png"
+import NavBar from './navbar';
 
 export default function Dashboard({params}:any) {
   const { data, status } = useSession();
@@ -69,22 +70,15 @@ export default function Dashboard({params}:any) {
   },[])
 
   return (
-    <div className="w-full h-screen grid grid-rows-[90px_1fr] grid-cols-[1fr_4fr] overflow-hidden" style={{ background : '#E2E4F0' }}>
-      {/* Header */}
-      <div className="row-span-1 col-span-2 ">
-       <div className='text-4xl p-5'>
-       Welcome, {data?.user?.name}
-       </div>
-        <div className="fixed right-7 top-3 w-14 rounded-full hover:cursor-pointer " onClick={toggleTheme}>
-          <Image className="object-cover" src={theme==="dark"?lightModeLogo:darkModeLogo} alt="profile"></Image>
-        </div>
-      </div>
+    <div className='h-screen'>
+    <NavBar/>
+    <div className="w-full h-[500px] grid grid-cols-[1fr_4fr] overflow-hidden pt-2" style={{ background : '#E2E4F0' }}>
       {/* Sidebar */}
-      <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg" style={{ background : '#ffffff' }}>
+      <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg items-center" style={{ background : '#ffffff' }}>
         <div className='mb-5 hover:cursor-pointer'>Settings</div>
         <div className='mb-5 hover:cursor-pointer'>Account Settings</div>
         <div className="mt-auto">
-          <Button color="primary" size="lg" variant="bordered" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >Logout</Button>
+          <Button color="primary" size="lg" variant="light" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >Logout</Button>
         </div>
       </aside>
       {/* Main Content */}
@@ -94,18 +88,18 @@ export default function Dashboard({params}:any) {
             Projects
           </div>
           <div className="flex flex-1 justify-end">
-            <Button color="primary" size="sm" variant="shadow" startContent={<AddIcon className="text-white" />} onPress={onOpen}>Create new project</Button>
+            <Button color="primary" size="sm" variant="solid" startContent={<AddIcon className="text-white" />} onPress={onOpen}>Create new project</Button>
           </div>
         </div>
-        <div className='row-span-1 overflow-y-scroll custom-scrollbar'> {/*adding this later style={{background: '#E2E4F0'}}*/}
+        <div className='row-span-1 overflow-y-scroll custom-scrollbar pr-2'> {/*adding this later style={{background: '#E2E4F0'}}*/}
           {projects?.length==0?(
              <div className='h-full w-full flex items-center justify-center'>
               <Spinner size="lg" />
              </div>
           ):(
-           <div className='grid grid-cols-5 gap-5 mt-10 hover:cursor-pointer'>
+           <div className='grid grid-cols-5 gap-5 mt-5 hover:cursor-pointer'>
            {projects?.map((project) => (
-              <Card className='max-w-sm mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform transition-shadow duration-300 transform hover:scale-105 hover:shadow-lg'>
+              <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <Image
                     src={nextJsLogo}
@@ -147,5 +141,7 @@ export default function Dashboard({params}:any) {
         </ModalContent>
       </Modal>
     </div>
+    </div>
+    
   );
 }

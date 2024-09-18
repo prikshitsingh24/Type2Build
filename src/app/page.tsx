@@ -49,8 +49,8 @@ export default function Home(session:Session) {
   }
 
   return (
-    <div>
-      {authBox&&(
+  <div className="bg-[url('https://img.freepik.com/free-vector/gradient-landscape-with-river_23-2149113449.jpg?w=900&t=st=1726637101~exp=1726637701~hmac=99f1102275310b18e4d8fbcda17c2133bfb2d1c6092e6eff7b896d5982f19127')] bg-cover bg-center w-full h-screen">      
+  {authBox&&(
          <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50">
          <AuthBox></AuthBox>
        </div>
@@ -60,10 +60,20 @@ export default function Home(session:Session) {
          <SignUpBox></SignUpBox>
        </div>
       )}
-      <div className="flex flex-row justify-end pt-7 mb-3">
-        <div className="mr-10 pt-4 w-14 rounded-full hover:cursor-pointer " onClick={toggleTheme}>
-          <Image className="object-cover" src={theme==="dark"?lightModeLogo:darkModeLogo} alt="profile"></Image>
-        </div>
+      <div className="flex flex-row justify-end pt-5 mb-10">
+      <Button
+          className="mr-5 w-5 h-8 rounded-full hover:cursor-pointer focus:outline-none"
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+          variant="light"
+      >
+          <Image
+              className="object-cover w-5 h-5" // Adjust width and height as needed
+              src={theme === "dark" ? lightModeLogo : darkModeLogo}
+              alt="profile"
+              style={{fill:'white'}}
+          />
+      </Button>
         </div>
       <div className="grid grid-rows-[1fr_1fr_1fr] justify-items-center min-h-screen md:p-8 p-5 pb-20 md:gap-y-56  sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="grid grid-rows-[1fr_1fr] justify-items-center ">
@@ -84,7 +94,7 @@ export default function Home(session:Session) {
     />
       </div>
       <div>
-        <Button color="primary" size="lg" variant="bordered" onClick={handleBuildClick}>Start building</Button>
+        <Button className="bg-black text-white hover:bg-gray-800" size="lg" variant="shadow" onClick={handleBuildClick}>Start building</Button>
       </div>
       </div>
      <div className="w-full">
