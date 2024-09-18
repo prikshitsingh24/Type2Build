@@ -1,13 +1,21 @@
 export const AddIcon = ({
-    fill = 'currentColor',
-    filled,
-    size,
-    height,
-    width,
-    label,
-    ...props
-  }:any) => {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#006FEE"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg>
-    );
-  };
+  fill = 'currentColor', // Default to currentColor to inherit color from parent
+  size = 24, // Default size
+  height,
+  width,
+  label,
+  ...props
+}: any) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      height={height || size}
+      width={width || size}
+      viewBox="0 0 24 24"
+      fill={fill} // Set fill to currentColor or passed color
+      {...props}
+    >
+      <path d="M12 5v14m7-7H5" stroke="currentColor" strokeWidth="2" />
+    </svg>
+  );
+};

@@ -11,6 +11,7 @@ import darkModeLogo from "../../images/darkMode.png"
 import lightModeLogo from "../../images/lightMode.png"
 import Image from "next/image";
 import nextJsLogo from "../../images/nextjs.png"
+import NavBar from './navbar';
 
 export default function Dashboard({params}:any) {
   const { data, status } = useSession();
@@ -69,51 +70,50 @@ export default function Dashboard({params}:any) {
   },[])
 
   return (
-    <div className="w-full h-screen grid grid-rows-[90px_1fr] grid-cols-[1fr_3fr] overflow-hidden ">
-      {/* Header */}
-      <div className="row-span-1 col-span-2 ">
-       <div className='text-4xl p-5'>
-       Welcome, {data?.user?.name}
-       </div>
-        <div className="fixed right-7 top-3 w-14 rounded-full hover:cursor-pointer " onClick={toggleTheme}>
-          <Image className="object-cover" src={theme==="dark"?lightModeLogo:darkModeLogo} alt="profile"></Image>
-        </div>
-      </div>
+    <div className='h-screen'>
+    <NavBar/>
+    <div className="w-full h-[500px] grid grid-cols-[1fr_4fr] overflow-hidden pt-2" style={{ background : '#E2E4F0' }}>
       {/* Sidebar */}
-      <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg">
-        <div className='mb-5 border-b hover:cursor-pointer'>Settings</div>
-        <div className='mb-5 border-b hover:cursor-pointer'>Account Settings</div>
+      <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg items-center" style={{ background : '#ffffff' }}>
+        <div className='mb-5 hover:cursor-pointer'>Settings</div>
+        <div className='mb-5 hover:cursor-pointer'>Account Settings</div>
         <div className="mt-auto">
-          <Button color="primary" size="lg" variant="bordered" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >Logout</Button>
+          <Button color="primary" size="lg" variant="light" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >Logout</Button>
         </div>
       </aside>
       {/* Main Content */}
-      <main className="row-span-1 col-span-1 p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4 overflow-y-scroll">
-        <div className='flex flex-row'>
-        <div>
-        Projects
+      <main className="grid grid-rows-[auto_1fr] p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4 overflow-hidden custom-scrollbar" style={{ background: '#ffffff' }}>
+        <div className="flex flex-row items-center p-2 border-b">
+          <div className="text-2xl font-bold text-gray-800">
+            Projects
+          </div>
+          <div className="flex flex-1 justify-end">
+            <Button color="primary" size="sm" variant="solid" startContent={<AddIcon className="text-white" />} onPress={onOpen}>Create new project</Button>
+          </div>
         </div>
-        <div className='flex flex-1 justify-end'>
-            <Button color="primary" size="sm" variant="bordered" startContent={<AddIcon/>} onPress={onOpen}>Create new project</Button>
-        </div>
-        </div>
-        <div>
+        <div className='row-span-1 overflow-y-scroll custom-scrollbar pr-2'> {/*adding this later style={{background: '#E2E4F0'}}*/}
           {projects?.length==0?(
              <div className='h-full w-full flex items-center justify-center'>
               <Spinner size="lg" />
              </div>
           ):(
-           <div className='grid grid-cols-4 gap-5 mt-10 hover:cursor-pointer'>
+           <div className='grid grid-cols-5 gap-5 mt-5 hover:cursor-pointer'>
            {projects?.map((project) => (
-                 <Card>
-                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                  <Image src={nextJsLogo} alt={"nextjs"} className="rounded-lg"></Image>
-                 </CardHeader>
-                 <CardBody className="overflow-visible py-2">
-                 <div className='text-md'>{project.projectName}</div>
-                   <div className='text-sm'>{project.projectDescription}</div>
-                 </CardBody>
-               </Card>
+              <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
+                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                  <Image
+                    src={nextJsLogo}
+                    alt={"nextjs"}
+                    className="rounded-lg transition-all duration-300 filter grayscale hover:grayscale-0"
+                  />
+                </CardHeader>
+                <CardBody className="overflow-visible py-2">
+                  <div className='text-md font-semibold'>{project.projectName}</div>
+                  <div className='text-sm text-gray-600'>{project.projectDescription}</div>
+                </CardBody>
+              </Card>
+            
+               
             ))}
            </div>
           )}
@@ -141,5 +141,7 @@ export default function Dashboard({params}:any) {
         </ModalContent>
       </Modal>
     </div>
+    </div>
+    
   );
 }

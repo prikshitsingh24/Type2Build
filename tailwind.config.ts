@@ -14,11 +14,22 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      scrollbar: {
+        thin: '2px',
+        DEFAULT: '8px',
+        rounded: '12px',
+        colors: {
+          thumb: '#888',
+          track: '#f1f1f1',
+          hover: '#555'
+        }
+      },
     },
   },
   plugins: [
     require("tailwindcss-animate"),
-    nextui()
+    nextui(),
+    require("tailwind-scrollbar")
   ],
 };
 export default config;
