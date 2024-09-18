@@ -2,11 +2,12 @@ import { GoogleGenerativeAI, GoogleGenerativeAIResponseError } from "@google/gen
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextResponse } from "next/server";
+const prisma = new PrismaClient();
 
 
 export async function POST(req:Request) {
 
-    const { prompt } = await req.json();
+    const { prompt, projectId} = await req.json();
     if (!process.env.MODEL_API) {
             return NextResponse.json({message:"Model api not provided"})
         } else {
@@ -28,6 +29,14 @@ export async function POST(req:Request) {
                     console.log(chunkText);
                     text+=chunkText;
                 }
+                const project = await prisma.project.update({
+                    where:{
+                        id: projectId
+                    },
+                    data: {
+                      frontendDev: text
+                    },
+                  })
                 return NextResponse.json({output:text})
 
             }catch(error){

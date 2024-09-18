@@ -23,8 +23,10 @@ model Project{
   createdAt DateTime  @default(now())
   projectName String
   projectDescription String?
-  frontend  String
-  Backend   String
+  frontendProd  String
+  backendProd   String
+  frontendDev   String
+  backendDev    String
   owner     User      @relation(fields: [ownerId],references: [id])
   ownerId   String
   

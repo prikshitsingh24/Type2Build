@@ -22,6 +22,7 @@ export default function Dashboard({params}:any) {
   const [projectName,setProjectName]=useState("");
   const [projectDescription,setProjectDescription]=useState("");
   const [projects,setProject]=useState<any[]>()
+  const [frontendCode, setFrontendCode] = useState("");
 
   const handleLogoutClick=async ()=>{
     await signOut({ redirect: false }); // Disable automatic redirection
@@ -40,6 +41,7 @@ export default function Dashboard({params}:any) {
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme); // Save the theme to localStorage
   };
+ 
 
   const handleCreateProject=async ()=>{
     setLoading(true);
@@ -63,8 +65,10 @@ export default function Dashboard({params}:any) {
       method: 'POST',
       body: JSON.stringify({userId}),
     })
-    const data= await response.json()
-    setProject(data.projects.projects)
+    if(response.ok){
+      const data= await response.json()
+      setProject(data.projects?.projects)
+    }
     }
     getProjects();
   },[])

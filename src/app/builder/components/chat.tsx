@@ -6,7 +6,7 @@ import codeStatus from '@/app/state/codeStatus';
 import promptStatus from '@/app/state/promptStatus';
 import messageStatus from '@/app/state/messageStatus';
 
-const Chat: React.FC = () => {
+export default function Chat ({id}:any) {
   const [message, setMessage] = useState('');
   const [code,setCode]=useRecoilState(codeStatus.frontendCodeState)
   const [loading,setLoading]=useState(false)
@@ -23,7 +23,7 @@ const Chat: React.FC = () => {
       try{
         const response=await fetch("/api/model/ask",{
           method:"POST",
-          body: JSON.stringify({prompt:message})
+          body: JSON.stringify({prompt:message, projectId: id })
         })
         const data = await response.json()
         console.log(data)
@@ -122,4 +122,3 @@ const Chat: React.FC = () => {
   );
 };
 
-export default Chat;
