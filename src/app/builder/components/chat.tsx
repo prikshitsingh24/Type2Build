@@ -6,7 +6,7 @@ import codeStatus from '@/app/state/codeStatus';
 import promptStatus from '@/app/state/promptStatus';
 import messageStatus from '@/app/state/messageStatus';
 
-export default function Chat ({id}:any) {
+export default function Chat ({id,previousChat}:any) {
   const [message, setMessage] = useState('');
   const [code,setCode]=useRecoilState(codeStatus.frontendCodeState)
   const [loading,setLoading]=useState(false)
@@ -85,6 +85,12 @@ export default function Chat ({id}:any) {
     }
       
   };
+  useEffect(()=>{
+    if(previousChat){
+      setMessages(previousChat)
+    }
+  },[])
+  
 
   return (
     <Card className="h-full flex flex-col bg-[#1e1e1e] rounded-[12px] border border-[#333]"> {/* Adjust border-radius */}

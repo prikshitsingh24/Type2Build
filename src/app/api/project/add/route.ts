@@ -19,6 +19,7 @@ export async function POST(req:Request) {
             backendProd:"",
             frontendDev:"",
             backendDev:"",
+            chat:[],
             owner: {
                 connect: { id: ownerId } // Connect to an existing user
             },

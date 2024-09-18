@@ -27,6 +27,7 @@ model Project{
   backendProd   String
   frontendDev   String
   backendDev    String
+  chat          String[]
   owner     User      @relation(fields: [ownerId],references: [id])
   ownerId   String
   

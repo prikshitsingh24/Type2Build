@@ -22,21 +22,32 @@ export async function POST(req:Request) {
                          7. information to build frontend: ${prompt}
                         `;
             try{
-                let text=" "
+                let text=""
                 const result = await model.generateContentStream(msg);
                 for await (const chunk of result.stream) {
                     const chunkText = chunk.text();
                     console.log(chunkText);
                     text+=chunkText;
                 }
-                const project = await prisma.project.update({
-                    where:{
-                        id: projectId
-                    },
-                    data: {
-                      frontendDev: text
-                    },
-                  })
+                const project = await prisma.project.findUnique({
+                  where: { id: projectId },
+                  select: { chat: true }, // Get the current chat messages
+                });
+              
+                if (!project) {
+                  throw new Error("Project not found");
+                }
+              
+                const updatedChat = [...project.chat, prompt]; // Append new chat message
+              
+                const updatedProject = await prisma.project.update({
+                  where: { id: projectId },
+                  data: {
+                    frontendDev: text,
+                    chat: updatedChat, // Update the chat array
+                  },
+                });
+              
                 return NextResponse.json({output:text})
 
             }catch(error){
