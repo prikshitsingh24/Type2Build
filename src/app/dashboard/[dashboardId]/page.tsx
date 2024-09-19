@@ -15,6 +15,7 @@ import NavBar from './navbar';
 import codeStatus from '@/app/state/codeStatus';
 import { useRecoilState } from 'recoil';
 import promptStatus from '@/app/state/promptStatus';
+import selectedElementsState from '@/app/state/selectedElementsState';
 
 export default function Dashboard({params}:any) {
   const { data, status } = useSession();
@@ -29,6 +30,8 @@ export default function Dashboard({params}:any) {
   const [code, setCode] = useRecoilState(codeStatus.frontendCodeState);
   const [newDraft,setNewDraft]=useRecoilState(promptStatus.newDraftState);
   const [changesInDraft,setChangesInDraft]=useRecoilState(promptStatus.changesInDraftState);
+  const [selectedElement,setSelectedElement]=useRecoilState(selectedElementsState.selectedElementState);
+  const [toolkit,setToolkit]=useRecoilState(selectedElementsState.toolkitStatus)
   const handleLogoutClick=async ()=>{
     await signOut({ redirect: false }); // Disable automatic redirection
     router.push('/');
@@ -69,6 +72,8 @@ export default function Dashboard({params}:any) {
 
   useEffect(()=>{
     setCode("")
+    setSelectedElement([])
+    setToolkit(false)
     setChangesInDraft(false);
     setNewDraft(true)
     const getProjects=async ()=>{

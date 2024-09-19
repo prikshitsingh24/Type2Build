@@ -3,6 +3,7 @@
 import codeStatus from "@/app/state/codeStatus";
 import messageStatus from "@/app/state/messageStatus";
 import promptStatus from "@/app/state/promptStatus";
+import selectedElementsState from "@/app/state/selectedElementsState";
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 import { useRecoilState } from "recoil";
@@ -10,19 +11,29 @@ import Renderer from "./renderer";
 import { ToolKitIcon } from "./toolkit";
 
 export default function Preview({frontendDev}: any=""){
-    const [selectedElement,setSelectedElement]=useState<any>(null);
-    const [toolkit,setToolkit]=useState(false)
+    const [selectedElement,setSelectedElement]=useRecoilState(selectedElementsState.selectedElementState);
+    const [toolkit,setToolkit]=useRecoilState(selectedElementsState.toolkitStatus)
     const [code,setCode]=useRecoilState(codeStatus.frontendCodeState);
     const [newDraft,setNewDraft]=useRecoilState(promptStatus.newDraftState);
     const [changesInDraft,setChangesInDraft]=useRecoilState(promptStatus.changesInDraftState);
     const [clearMessage,setClearMessage]=useRecoilState(messageStatus.messageState)
     
-    const handleSelectedElement=(element:any)=>{
-        if(toolkit){
-            setSelectedElement(element)
+    const handleSelectedElement = (element: any) => {
+        if (toolkit) {
+            setSelectedElement((prevElements: any) => {
+                const elementExists = prevElements.some((el: any) => el.innerText === element.innerText);
+    
+                if (elementExists) {
+                    // If the element exists, remove it based on the same innerText
+                    return prevElements.filter((el: any) => el.innerText !== element.innerText);
+                } else {
+                    // If the element doesn't exist, add it to the array
+                    return [...prevElements, element];
+                }
+            });
         }
-        
-    }
+    };
+    
 
     const handleToolkitClick=()=>{
         setToolkit(!toolkit)
@@ -66,14 +77,6 @@ export default function Preview({frontendDev}: any=""){
                     <Renderer onElementSelect={handleSelectedElement}></Renderer>
                 )}
             </div>
-            {selectedElement && toolkit && (
-                <div className="absolute bottom-4 right-0 p-4 bg-white border border-gray-300 shadow-lg mt-4 mr-4 rounded-md">
-                    <h3 className="text-lg font-semibold">Element Info</h3>
-                    <p><strong>Tag Name:</strong> {selectedElement.tagName}</p>
-                    <p><strong>Class Name:</strong> {selectedElement.className}</p>
-                    <p><strong>Inner Text:</strong> {selectedElement.innerText}</p>
-                </div>
-            )}
         </div>
     )
 }

@@ -14,8 +14,9 @@ export async function POST(req:Request) {
             const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro-latest" });
             const msg = `1. You are a website frontend builder give me the html and inline css code like style=" "
                          2. Just provide the code no extra information
+                         3. dont change the original code
                          3. This is my code: ${code}
-                         4. keep the code as it is and only make changes to the provided block which are : ${prompt}
+                         4. make changes only here : ${prompt}
                         `;
             try{
                 let text=" "

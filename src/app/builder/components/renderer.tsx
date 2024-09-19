@@ -9,7 +9,9 @@ export default function Renderer({ onElementSelect, frontendDev }: any) {
     const handleClick = (e: any) => {
         e.stopPropagation(); // Prevent the event from bubbling up to the parent
         onElementSelect(e.target); // Pass the clicked element to the parent
-    };              
+    };         
+    
+    
 
     if(code){
 

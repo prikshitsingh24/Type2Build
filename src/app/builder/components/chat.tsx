@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import codeStatus from '@/app/state/codeStatus';
 import promptStatus from '@/app/state/promptStatus';
 import messageStatus from '@/app/state/messageStatus';
+import selectedElementsState from '@/app/state/selectedElementsState';
 
 export default function Chat ({id,previousChat,frontendDev}:any) {
   const [message, setMessage] = useState('');
@@ -14,6 +15,8 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
   const [newDraft,setNewDraft]=useRecoilState(promptStatus.newDraftState);
   const [changesInDraft,setChangesInDraft]=useRecoilState(promptStatus.changesInDraftState);
   const [clearMessage,setClearMessage]=useRecoilState(messageStatus.messageState)
+  const [selectedElement,setSelectedElement]=useRecoilState(selectedElementsState.selectedElementState);
+  const [toolkit,setToolkit]=useRecoilState(selectedElementsState.toolkitStatus)
 
   const newDraftPrompt=async ()=>{
     setLoading(true)
@@ -50,49 +53,50 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
   },[clearMessage])
 
   const changesInDraftPrompt=async ()=>{
-    setLoading(true)
-    if(message == " "){
-      return
-    }
-      try{
-        if(code){
-          const response=await fetch("/api/model/modify",{
-            method:"POST",
-            body: JSON.stringify({prompt:message,code,projectId: id})
-          })
-          if(response.ok){
-            const data = await response.json()
-          console.log(data)
-          setCode(data.output)
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            message
-          ]);
-          setMessage('');
-          }
-        }else{
-          const response=await fetch("/api/model/modify",{
-            method:"POST",
-            body: JSON.stringify({prompt:message,code:frontendDev,projectId: id})
-          })
-          if(response.ok){
-            const data = await response.json()
-          console.log(data)
-          setCode(data.output)
-          setMessages((prevMessages) => [
-            ...prevMessages,
-            message
-          ]);
-          setMessage('');
-          }
-        }
-        
-      }catch(err){
-        return err
-      }finally{
-        setLoading(false)
+      let prompt;
+      setLoading(true);
+  
+      if (message.trim() === "") {
+          return;
       }
-  }
+  
+      // Include selected elements if there are any
+      if (selectedElement.length > 0) {
+          prompt = `${message} \n` + selectedElement
+              .map((el: any, index: number) => `Element ${index + 1}: ${el.innerText} ${el.tagName} ${el.className}`)
+              .join("\n");
+          console.log(prompt)
+      } else {
+          prompt = message;
+      }
+  
+      try {
+          const response = await fetch("/api/model/modify", {
+              method: "POST",
+              body: JSON.stringify({
+                  prompt,
+                  code: code || frontendDev, // send either the existing code or frontendDev as the fallback
+                  projectId: id,
+              }),
+          });
+  
+          if (response.ok) {
+              const data = await response.json();
+              console.log(data);
+              setCode(data.output);
+              setMessages((prevMessages) => [
+                  ...prevMessages,
+                  message,
+              ]);
+              setMessage('');
+              setSelectedElement([])
+          }
+      } catch (err) {
+          console.error(err);
+      } finally {
+          setLoading(false);
+      }
+  };
 
 
 
@@ -117,8 +121,8 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
       <CardHeader className="bg-[#333] text-[#f0f0f0] border-b border-[#444] py-2 px-4 rounded-t-[12px]"> {/* Smooth top corners */}
         <div className="text-lg font-semibold">Chat</div>
       </CardHeader>
-      <CardBody className="flex-1 overflow-y-auto p-2 bg-[#1e1e1e]">
-        <div className="flex flex-col space-y-2 overflow-y-scroll h-full">
+      <CardBody className="h-10 p-2 bg-[#1e1e1e]">
+        <div className="flex flex-col space-y-2 ">
         <div className="mt-2 text-sm text-[#ccc]">
           {messages.map((msg, index) => (
             <div className='bg-blue-700 rounded-lg p-2 mb-5' key={index}>{msg}</div>
@@ -127,6 +131,17 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
         </div>
       </CardBody>
       <CardFooter className="flex flex-col items-center p-2 rounded-b-[12px]"> {/* Smooth bottom corners */}
+      {selectedElement.length > 0 && toolkit && (
+        <div className="flex flex-row absolute bottom-40 left-0 right-0 w-full">
+          <div className="bg-black flex flex-row bg-opacity-50 w-full overflow-x-scroll backdrop-blur-md shadow-lg mt-4 rounded-md p-4">
+            {selectedElement.map((element: any, index: any) => (
+              <div key={index} className='bg-white border border-gray-300 shadow-lg mt-2 rounded-md p-2 mr-2'>
+                <strong>Element {index + 1}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+        )}
         <Textarea
           value={message}
           onChange={(e) => setMessage(e.target.value)}
