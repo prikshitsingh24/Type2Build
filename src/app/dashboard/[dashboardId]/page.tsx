@@ -86,82 +86,85 @@ export default function Dashboard({params}:any) {
   },[])
 
   return (
-    <div className='h-screen'>
-    <NavBar/>
-    <div className="w-full h-[500px] grid grid-cols-[1fr_4fr] overflow-hidden pt-2" style={{ background : '#E2E4F0' }}>
-      {/* Sidebar */}
-      <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg items-center" style={{ background : '#ffffff' }}>
-        <div className='mb-5 hover:cursor-pointer'>Settings</div>
-        <div className='mb-5 hover:cursor-pointer'>Account Settings</div>
-        <div className="mt-auto">
-          <Button color="primary" size="lg" variant="light" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >Logout</Button>
-        </div>
-      </aside>
-      {/* Main Content */}
-      <main className="grid grid-rows-[auto_1fr] p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4 overflow-hidden custom-scrollbar" style={{ background: '#ffffff' }}>
-        <div className="flex flex-row items-center p-2 border-b">
-          <div className="text-2xl font-bold text-gray-800">
-            Projects
+    <div>
+      <div className="h-0">
+        <NavBar/>
+      </div>
+  
+      <div className="pt-20 h-screen w-full grid grid-cols-[1fr_4fr] " style={{ background : '#E2E4F0' }}>
+        {/* Sidebar */}
+        <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg items-center" style={{ background : '#ffffff' }}>
+          <div className='mb-5 hover:cursor-pointer'>Settings</div>
+          <div className='mb-5 hover:cursor-pointer'>Account Settings</div>
+          <div className="mt-auto">
+            <Button color="primary" size="lg" variant="light" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >Logout</Button>
           </div>
-          <div className="flex flex-1 justify-end">
-            <Button color="primary" size="sm" variant="solid" startContent={<AddIcon className="text-white" />} onPress={onOpen}>Create new project</Button>
-          </div>
-        </div>
-        <div className='row-span-1 overflow-y-scroll custom-scrollbar pr-2'> {/*adding this later style={{background: '#E2E4F0'}}*/}
-          {projects?.length==0?(
-             <div className='h-full w-full flex items-center justify-center'>
-              <Spinner size="lg" />
-             </div>
-          ):(
-           <div className='grid grid-cols-5 gap-5 mt-5 hover:cursor-pointer'>
-           {projects?.map((project) => (
-            <div onClick={() => {
-              console.log("Card was clicked!");
-              handleCardClick(project.id);}}>
-                <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
-                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                  <Image
-                    src={nextJsLogo}
-                    alt={"nextjs"}
-                    className="rounded-lg transition-all duration-300 filter grayscale hover:grayscale-0"
-                  />
-                </CardHeader>
-                <CardBody className="overflow-visible py-2">
-                  <div className='text-md font-semibold'>{project.projectName}</div>
-                  <div className='text-sm text-gray-600'>{project.projectDescription}</div>
-                </CardBody>
-              </Card>
+        </aside>
+        {/* Main Content */}
+        <main className="grid grid-rows-[auto_1fr] p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4 overflow-hidden custom-scrollbar" style={{ background: '#ffffff' }}>
+          <div className="flex flex-row items-center p-2 border-b">
+            <div className="text-2xl font-bold text-gray-800">
+              Projects
             </div>
+            <div className="flex flex-1 justify-end">
+              <Button color="primary" size="sm" variant="solid" startContent={<AddIcon className="text-white" />} onPress={onOpen}>Create new project</Button>
+            </div>
+          </div>
+          <div className='row-span-1 overflow-y-scroll custom-scrollbar pr-2 pb-2'> {/*adding this later style={{background: '#E2E4F0'}}*/}
+            {projects?.length==0?(
+              <div className='h-full w-full flex items-center justify-center'>
+                <Spinner size="lg" />
+              </div>
+            ):(
+            <div className='grid grid-cols-5 gap-5 mt-5 hover:cursor-pointer'>
+            {projects?.map((project) => (
+              <div onClick={() => {
+                console.log("Card was clicked!");
+                handleCardClick(project.id);}}>
+                  <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
+                  <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+                    <Image
+                      src={nextJsLogo}
+                      alt={"nextjs"}
+                      className="rounded-lg transition-all duration-300 filter grayscale hover:grayscale-0"
+                    />
+                  </CardHeader>
+                  <CardBody className="overflow-visible py-2">
+                    <div className='text-md font-semibold'>{project.projectName}</div>
+                    <div className='text-sm text-gray-600'>{project.projectDescription}</div>
+                  </CardBody>
+                </Card>
+              </div>
+                
               
-            
-               
-            ))}
-           </div>
-          )}
-        </div>
-      </main>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">New Project</ModalHeader>
-              <ModalBody>
-              <Input type="name" variant="flat"label="Name" required onChange={(e)=>setProjectName(e.target.value)}/>
-              <Input type="name" variant="flat"label="Description(optional)" onChange={(e)=>setProjectDescription(e.target.value)}/>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
-                  Close
-                </Button>
-                <Button color="primary" isLoading={loading} onPress={handleCreateProject}>
-                  Create
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-    </div>
+                
+              ))}
+            </div>
+            )}
+          </div>
+        </main>
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader className="flex flex-col gap-1">New Project</ModalHeader>
+                <ModalBody>
+                <Input type="name" variant="flat"label="Name" required onChange={(e)=>setProjectName(e.target.value)}/>
+                <Input type="name" variant="flat"label="Description(optional)" onChange={(e)=>setProjectDescription(e.target.value)}/>
+                </ModalBody>
+                <ModalFooter>
+                  <Button color="danger" variant="light" onPress={onClose}>
+                    Close
+                  </Button>
+                  <Button color="primary" isLoading={loading} onPress={handleCreateProject}>
+                    Create
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </Modal>
+      </div>
     </div>
     
   );

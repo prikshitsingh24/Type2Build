@@ -19,7 +19,7 @@ export default function NavBar() {
 
 
   return (
-    <Navbar position="static" className="max-h-12">
+    <Navbar position="static" className="h-16 bg-blue-400">
       <NavbarBrand>
         <p className="font-bold text-inherit">Welcome, {data?.user?.name}</p>
       </NavbarBrand>

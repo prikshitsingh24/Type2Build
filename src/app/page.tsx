@@ -49,8 +49,8 @@ export default function Home(session:Session) {
   }
 
   return (
-  <div className="bg-[url('https://img.freepik.com/free-vector/gradient-landscape-with-river_23-2149113449.jpg?w=900&t=st=1726637101~exp=1726637701~hmac=99f1102275310b18e4d8fbcda17c2133bfb2d1c6092e6eff7b896d5982f19127')] bg-cover bg-center w-full h-screen">      
-  {authBox&&(
+    <div className="absolute bg-[url('https://img.freepik.com/free-vector/white-abstract-wallpaper_23-2148808300.jpg?t=st=1726736230~exp=1726739830~hmac=49973c693ad893bf7a9c34b1f4b8be44f2c6eedf37d59fc7ad069f8ca12e8acd&w=1380')] bg-cover bg-left-top h-screen w-full">
+      {authBox&&(
          <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50">
          <AuthBox></AuthBox>
        </div>
