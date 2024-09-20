@@ -3,19 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  /* --background-image: url('https://img.freepik.com/free-photo/black-white-background_23-2150530985.jpg?t=st=1726551401~exp=1726555001~hmac=8979b273deaa4a2ceeb7bbb645f13993ce80c593dfd07b4e20c1d3023b2622ec&w=1800'); */
+  --background: #E2E4F0; /* Light mode background */
+  --foreground: #171717; /* Light mode foreground text color */
+  --card-background: #ffffff; /* Light mode card background */
+  --dark-background: black; /* Dark mode background */
+  --dark-foreground: #f0f0f0; /* Dark mode foreground text color */
+  --dark-card-background: #333333; /* Dark mode card background */
 }
 
 [data-theme='light'] {
-  --background: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
-  --foreground: #171717;
+  --background: #E2E4F0; /* Light mode body color */
+  --foreground: #171717; /* Light mode text color */
+  --subcontainer-background: #ffffff; /* Light mode subcontainer background */
 }
 
 [data-theme='dark'] {
-  --background: #18181B; /* Slightly transparent dark overlay */
-  --foreground: #FDFDFD;
+  --background: black; /* Dark mode body color */
+  --foreground: #f0f0f0; /* Dark mode text color */
+  --subcontainer-background: #333333; /* Dark mode subcontainer background */
+}
+
+body {
+  --heading-font: 'Montserrat' , sans-serif;
+  font-family: 'Roboto', sans-serif;
+  
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 .main-content {

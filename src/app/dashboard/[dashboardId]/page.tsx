@@ -93,26 +93,40 @@ export default function Dashboard({params}:any) {
   return (
     <div>
       <div className="h-0">
-        <NavBar/>
+        <NavBar />
       </div>
-  
-      <div className="pt-20 h-screen w-full grid grid-cols-[1fr_4fr] " style={{ background : '#E2E4F0' }}>
+      
+      <div
+        className={`pt-20 h-screen w-full grid grid-cols-[1fr_4fr] ${theme === 'dark' ? 'bg-black' : 'bg-[#E2E4F0]'}`}
+        style={{ background: 'var(--background)' }} // For light/dark mode
+      >
         {/* Sidebar */}
-        <aside className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg items-center" style={{ background : '#ffffff' }}>
+        <aside
+          className="border ml-4 rounded-xl mb-5 p-4 flex flex-col text-lg items-center"
+          style={{ background: 'var(--subcontainer-background)' }} // Use the subcontainer background variable
+        >
           <div className='mb-5 hover:cursor-pointer'>Settings</div>
           <div className='mb-5 hover:cursor-pointer'>Account Settings</div>
           <div className="mt-auto">
-            <Button color="primary" size="lg" variant="light" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >Logout</Button>
+            <Button color="primary" size="lg" variant="light" startContent={<LogoutIcon/>} onClick={handleLogoutClick} >
+              Logout
+            </Button>
           </div>
         </aside>
+        
         {/* Main Content */}
-        <main className="grid grid-rows-[auto_1fr] p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4 overflow-hidden custom-scrollbar" style={{ background: '#ffffff' }}>
+        <main
+          className="grid grid-rows-[auto_1fr] p-4 text-2xl border rounded-xl mb-5 ml-4 mr-4 overflow-hidden custom-scrollbar"
+          style={{ background: 'var(--subcontainer-background)' }} // Use the subcontainer background variable
+        >
           <div className="flex flex-row items-center p-2 border-b">
-            <div className="text-2xl font-bold text-gray-800">
+            <div className="text-2xl font-bold" style={{ color: 'var(--foreground)' }}>
               Projects
             </div>
             <div className="flex flex-1 justify-end">
-              <Button color="primary" size="sm" variant="solid" startContent={<AddIcon className="text-white" />} onPress={onOpen}>Create new project</Button>
+              <Button color="primary" size="sm" variant="solid" onPress={toggleTheme}>
+                Create new project
+              </Button>
             </div>
           </div>
           <div className='row-span-1 overflow-y-scroll custom-scrollbar pr-2 pb-2'> {/*adding this later style={{background: '#E2E4F0'}}*/}
@@ -126,7 +140,7 @@ export default function Dashboard({params}:any) {
               <div onClick={() => {
                 console.log("Card was clicked!");
                 handleCardClick(project.id);}}>
-                  <Card className=' mx-auto rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-90 hover:shadow-lg'>
+                  <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
                   <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                     <Image
                       src={nextJsLogo}
@@ -139,15 +153,14 @@ export default function Dashboard({params}:any) {
                     <div className='text-sm text-gray-600'>{project.projectDescription}</div>
                   </CardBody>
                 </Card>
-              </div>
-                
-              
-                
+              </div>    
               ))}
             </div>
             )}
           </div>
         </main>
+        
+        {/* Modal code can remain the same */}
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
           <ModalContent>
             {(onClose) => (
@@ -169,6 +182,7 @@ export default function Dashboard({params}:any) {
             )}
           </ModalContent>
         </Modal>
+
       </div>
     </div>
     
