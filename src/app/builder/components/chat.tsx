@@ -39,6 +39,7 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
           message
         ]);
         setMessage('');
+        
       }catch(err){
         return err
       }finally{
@@ -93,6 +94,7 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
               ]);
               setMessage('');
               setSelectedElement([])
+              setOverlayStyles([])
           }
       } catch (err) {
           console.error(err);
