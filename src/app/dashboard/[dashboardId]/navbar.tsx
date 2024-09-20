@@ -21,7 +21,7 @@ export default function NavBar() {
   return (
     <Navbar position="static" className="h-16 bg-blue-400">
       <NavbarBrand>
-        <p className="font-bold text-inherit">Welcome, {data?.user?.name}</p>
+        <p className="font-bold text-inherit text-2xl">Welcome, {data?.user?.name}</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>

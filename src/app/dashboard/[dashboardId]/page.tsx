@@ -126,7 +126,7 @@ export default function Dashboard({params}:any) {
               <div onClick={() => {
                 console.log("Card was clicked!");
                 handleCardClick(project.id);}}>
-                  <Card className='max-w-36 max-h-44 mx-auto bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-105 hover:shadow-lg'>
+                  <Card className=' mx-auto rounded-lg shadow-md overflow-hidden transition-transform duration-300 transform hover:scale-90 hover:shadow-lg'>
                   <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                     <Image
                       src={nextJsLogo}
