@@ -6,6 +6,8 @@ import codeStatus from '@/app/state/codeStatus';
 import promptStatus from '@/app/state/promptStatus';
 import messageStatus from '@/app/state/messageStatus';
 import selectedElementsState from '@/app/state/selectedElementsState';
+import crossLogoRed from "../../images/crossLogoRed.png"
+import Image from "next/image";
 
 export default function Chat ({id,previousChat,frontendDev}:any) {
   const [message, setMessage] = useState('');
@@ -17,6 +19,7 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
   const [clearMessage,setClearMessage]=useRecoilState(messageStatus.messageState)
   const [selectedElement,setSelectedElement]=useRecoilState(selectedElementsState.selectedElementState);
   const [toolkit,setToolkit]=useRecoilState(selectedElementsState.toolkitStatus)
+  const [overlayStyles, setOverlayStyles] = useRecoilState(selectedElementsState.overlayStatus)
 
   const newDraftPrompt=async ()=>{
     setLoading(true)
@@ -115,6 +118,14 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
     }
   },[])
   
+  const handleRemoveClick = (index: number) => {
+    setOverlayStyles((prevElements:any) => {
+      return prevElements.filter((_: any, i: number) => i !== index);
+    });
+    setSelectedElement((prevElements:any) => {
+      return prevElements.filter((_: any, i: number) => i !== index);
+    });
+  };
 
   return (
     <Card className="h-full flex flex-col bg-[#1e1e1e] rounded-[12px] border border-[#333]"> {/* Adjust border-radius */}
@@ -135,9 +146,12 @@ export default function Chat ({id,previousChat,frontendDev}:any) {
         <div className="flex flex-row absolute bottom-40 left-0 right-0 w-full">
           <div className="bg-black flex flex-row bg-opacity-50 w-full overflow-x-scroll backdrop-blur-md shadow-lg mt-4 rounded-md p-4">
             {selectedElement.map((element: any, index: any) => (
-              <div key={index} className='bg-white border border-gray-300 shadow-lg mt-2 rounded-md p-2 mr-2'>
+             <div className='relative'>
+              <div onClick={() => handleRemoveClick(index)}><Image src={crossLogoRed} alt="cross" className="w-4 absolute z-99 right-3 top-2"></Image></div>
+               <div key={index} className='bg-white border border-gray-300 shadow-lg mt-2 rounded-md p-2 mr-2 pt-3'>
                 <strong>Element {index + 1}</strong>
               </div>
+             </div>
             ))}
           </div>
         </div>

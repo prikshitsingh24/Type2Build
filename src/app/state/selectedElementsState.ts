@@ -10,4 +10,9 @@ const toolkitStatus=atom({
   default:false
 })
 
-export default {selectedElementState,toolkitStatus}
+const overlayStatus=atom({
+  key:"overlayStatus",
+  default:<any>[]
+})
+
+export default {selectedElementState,toolkitStatus,overlayStatus}

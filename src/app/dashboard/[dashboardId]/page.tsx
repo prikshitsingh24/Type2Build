@@ -32,6 +32,7 @@ export default function Dashboard({params}:any) {
   const [changesInDraft,setChangesInDraft]=useRecoilState(promptStatus.changesInDraftState);
   const [selectedElement,setSelectedElement]=useRecoilState(selectedElementsState.selectedElementState);
   const [toolkit,setToolkit]=useRecoilState(selectedElementsState.toolkitStatus)
+  const [overlayStyles, setOverlayStyles] = useRecoilState(selectedElementsState.overlayStatus)
   const handleLogoutClick=async ()=>{
     await signOut({ redirect: false }); // Disable automatic redirection
     router.push('/');
@@ -73,6 +74,7 @@ export default function Dashboard({params}:any) {
   useEffect(()=>{
     setCode("")
     setSelectedElement([])
+    setOverlayStyles([])
     setToolkit(false)
     setChangesInDraft(false);
     setNewDraft(true)
