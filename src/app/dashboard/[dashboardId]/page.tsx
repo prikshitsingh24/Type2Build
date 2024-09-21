@@ -126,7 +126,7 @@ export default function Dashboard({params}:any) {
               Projects
             </div>
             <div className="flex flex-1 justify-end">
-              <Button color="primary" size="sm" variant="solid" onPress={toggleTheme}>
+              <Button color="primary" size="sm" variant="solid" onPress={onOpen}>
                 Create new project
               </Button>
             </div>
