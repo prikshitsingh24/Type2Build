@@ -36,15 +36,20 @@ export async function POST(req:Request) {
                   }
                 
                   const updatedChat = [...project.chat, prompt]; // Append new chat message
+
+                  const cleanedCode = text
+                  .replace(/```html\s*/, '')
+                  .replace(/```$/, '')
+                  .trim()
                 
                   const updatedProject = await prisma.project.update({
                     where: { id: projectId },
                     data: {
-                      frontendDev: text,
+                      frontendDev: cleanedCode,
                       chat: updatedChat, // Update the chat array
                     },
                   });
-                return NextResponse.json({output:text})
+                return NextResponse.json({output:cleanedCode})
 
             }catch(error){
                 if (error instanceof GoogleGenerativeAIResponseError) {

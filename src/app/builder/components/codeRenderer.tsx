@@ -7,18 +7,12 @@ interface CodeRendererProps {
 const CodeRenderer: React.FC<CodeRendererProps> = ({ code }) => {
 
 
-    const cleanedCode = code
-            .replace(/```html\s*/, '')
-            .replace(/```$/, '')
-            .trim()
-
-    console.log(cleanedCode)
     return (
         <div className="h-full w-full overflow-hidden">
-            {cleanedCode.trim() !== "" ? (
+            {code.trim() !== "" ? (
                 <div
                     className="w-full h-full"
-                    dangerouslySetInnerHTML={{ __html: cleanedCode }}
+                    dangerouslySetInnerHTML={{ __html: code }}
                 />
             ) : (
                 <div className="flex justify-center h-full items-center text-2xl">
