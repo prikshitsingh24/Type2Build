@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       where: { id: projectId },
     });
 
-    if (!project?.frontendDev) {
+    if (!project?.frontendProd) {
       return NextResponse.json({ message: 'Could not find any project with the id' });
     }
 
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
     const customCode = `
       export default function Home() {
         return(
-        ${project.frontendDev};
+        ${project.frontendProd}
       )}
     `;
     // Ensure the 'app' directory exists in the 'src' folder
