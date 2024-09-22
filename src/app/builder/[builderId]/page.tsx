@@ -9,7 +9,7 @@ export default function Builder({ params }: any) {
     const projectId = params.builderId;
     const [project, setProject] = useState<any>();
     const [loading, setLoading] = useState(true); // Add a loading state
-    
+    const [buildLoading,setBuildLoading]=useState(false);
 
     useEffect(() => {
         const fetchProject = async () => {
@@ -30,6 +30,32 @@ export default function Builder({ params }: any) {
         fetchProject();
     }, [projectId]);
 
+
+
+    const handleBuildClick=async ()=>{
+        setBuildLoading(true);
+        const response=await fetch("/api/project/build",{
+            method:"POSt",
+            body:JSON.stringify({projectId})
+        })
+
+        if (response.ok) {
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = 'nextjs-app.zip'; // The name of the file to be downloaded
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            setBuildLoading(false);
+          } else {
+            console.error('Error downloading the file:', await response.json());
+            setBuildLoading(false)
+          }
+    }
+
     if (loading) {
         return (
             <div className="fixed inset-0 flex items-center justify-center backdrop-blur-md z-50">
@@ -39,11 +65,11 @@ export default function Builder({ params }: any) {
     }
 
     return (
-        <div className="w-full h-screen overflow-hidden">
+        <div className="w-full h-screen overflow-hidden bg-white">
             <div className="p-2 border-b-2 mb-2 flex flex-row items-center">
                 <div className="flex-1 text-2xl">{project.projectName}</div>
                 <div className="flex-2 mr-2">
-                    <Button startContent={<BuildIcon />} color="primary" size="md" variant="bordered">
+                    <Button startContent={<BuildIcon />} isLoading={buildLoading} color="primary" size="md" variant="bordered" onClick={handleBuildClick}>
                         Build
                     </Button>
                 </div>
